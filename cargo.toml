@@ -1,0 +1,22 @@
+[package]
+name = "biopics_cli"
+version = "0.1.0"
+edition = "2021"
+
+# Optional: Add a description, license, and repository link
+description = "A Rust CLI application for handling biopics data with SQLite"
+license = "MIT"
+repository = "https://github.com/yourusername/biopics_cli"
+
+[dependencies]
+# Async HTTP client to download files
+reqwest = { version = "0.11", features = ["json"] }
+
+# SQLite support
+rusqlite = { version = "0.28", features = ["bundled"] }
+
+# CSV reading and writing
+csv = "1.1"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }

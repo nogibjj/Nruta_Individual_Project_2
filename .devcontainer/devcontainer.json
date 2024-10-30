@@ -1,0 +1,12 @@
+{
+    "name": "Rust Dev Container",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "extensions": [
+
+        "rust-lang.rust-analyzer"
+    ],
+    "postCreateCommand": "cargo build --release && echo 'Setup complete!'",
+    "remoteUser": "root"
+}

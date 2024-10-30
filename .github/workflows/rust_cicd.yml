@@ -1,0 +1,41 @@
+name: Rust CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install dependencies
+        run: cargo build --release  # Installs all dependencies and builds in release mode
+
+      - name: Lint Rust code
+        run: cargo clippy -- -D warnings  # Lints and treats warnings as errors
+
+      - name: Format Rust code
+        run: cargo fmt -- --check  # Ensures code formatting follows the style guide
+
+      - name: Build Rust project
+        run: cargo build --release  # Builds the project in release mode
+
+      - name: Run Rust tests
+        run: cargo test  # Runs unit and integration tests
+
+      - name: Run Rust application (optional, for CLI)
+        run: cargo run --release
