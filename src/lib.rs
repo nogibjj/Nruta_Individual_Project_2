@@ -52,21 +52,22 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
     let conn = Connection::open("biopics.db")?;
 
     conn.execute(
-        "CREATE TABLE IF NOT EXISTS Biopics (
-            title TEXT,
-            country TEXT,
-            year_release INTEGER,
-            box_office TEXT,
-            director TEXT,
-            number_of_subjects INTEGER,
-            subject TEXT,
-            type_of_subject TEXT,
-            subject_race TEXT,
-            subject_sex TEXT,
-            lead_actor_actress TEXT
+       "CREATE TABLE IF NOT EXISTS Biopics (
+        title TEXT,
+        country TEXT,
+        year_release INTEGER,
+        box_office TEXT,
+        director TEXT,
+        number_of_subjects INTEGER,
+        subject TEXT,
+        type_of_subject TEXT,
+        subject_race TEXT,
+        subject_sex TEXT,
+        lead_actor_actress TEXT,
+        UNIQUE(title, country, year_release, box_office, director, number_of_subjects, subject, type_of_subject, subject_race, subject_sex, lead_actor_actress)
         )",
         [],
-    )?;
+        )?;
 
     let mut rdr = csv::ReaderBuilder::new()
         .has_headers(true)
