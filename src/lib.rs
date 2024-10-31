@@ -1,12 +1,8 @@
-// src/lib.rs
-
-use csv; // Ensure the csv crate is imported
 use reqwest::blocking::Client;
 use rusqlite::{params, Connection, Result};
-use std::error::Error;
 use std::fs;
 use std::fs::OpenOptions;
-use std::io::Write; // Import the Error trait for custom error handling
+use std::io::Write;
 
 const LOG_FILE: &str = "query_log.md";
 
@@ -29,11 +25,12 @@ pub fn extract(url: &str, file_path: &str, directory: &str) {
     if fs::metadata(file_path).is_ok() {
         eprintln!("Warning: File already exists at: {}", file_path);
         return; // Or handle it as needed, e.g., prompt to overwrite
-    } 
+    }
 
     let client = Client::new();
     let mut response = client.get(url).send().expect("Failed to send request");
 
+    // Ensuring we write to the file only if the response is a success
     if response.status().is_success() {
         let mut file = fs::File::create(file_path).expect("Failed to create file");
         std::io::copy(&mut response, &mut file).expect("Failed to copy content");
@@ -46,9 +43,13 @@ pub fn extract(url: &str, file_path: &str, directory: &str) {
     }
 }
 
-pub fn transform_load(dataset: &str) -> Result<String, Box<dyn Error>> {
-    // Updated to return a Box<dyn Error>
-    let conn = Connection::open("MatchResultsDB.db")?;
+pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
+    if fs::metadata(dataset).is_err() {
+        eprintln!("Error: Dataset file does not exist: {}", dataset);
+        return Err(rusqlite::Error::QueryReturnedNoRows);
+    }
+
+    let conn = Connection::open("biopics.db")?;
 
     conn.execute(
         "CREATE TABLE IF NOT EXISTS Biopics (
@@ -70,7 +71,10 @@ pub fn transform_load(dataset: &str) -> Result<String, Box<dyn Error>> {
     let mut rdr = csv::ReaderBuilder::new()
         .has_headers(true)
         .from_path(dataset)
-        .map_err(|e| format!("CSV Error: {}", e))?;
+        .map_err(|e| {
+            eprintln!("Failed to create CSV reader: {:?}", e);
+            rusqlite::Error::QueryReturnedNoRows
+        })?;
 
     let mut stmt = conn.prepare(
         "INSERT INTO Biopics (
@@ -89,34 +93,40 @@ pub fn transform_load(dataset: &str) -> Result<String, Box<dyn Error>> {
     )?;
 
     for result in rdr.records() {
-        let record = result.map_err(|e| format!("CSV Record Error: {}", e))?;
-        if record.len() < 11 {
-            eprintln!(
-                "Warning: Record has fewer than expected fields: {:?}",
-                record
-            );
-            continue;
+        match result {
+            Ok(record) => {
+                if record.len() < 11 {
+                    eprintln!(
+                        "Warning: Record has fewer than expected fields: {:?}",
+                        record
+                    );
+                    continue;
+                }
+                stmt.execute([
+                    &record[0],
+                    &record[1],
+                    &record[2],
+                    &record[3],
+                    &record[4],
+                    &record[5],
+                    &record[6],
+                    &record[7],
+                    &record[8],
+                    &record[9],
+                    &record[10],
+                ])?;
+            }
+            Err(err) => {
+                eprintln!("Error reading CSV record: {:?}", err);
+            }
         }
-        stmt.execute([
-            &record[0],
-            &record[1],
-            &record[2],
-            &record[3],
-            &record[4],
-            &record[5],
-            &record[6],
-            &record[7],
-            &record[8],
-            &record[9],
-            &record[10],
-        ])?;
     }
-
-    Ok("MatchResultsDB.db".to_string())
+    conn.close();
+    Ok("biopics.db".to_string())
 }
 
 pub fn query(query: &str) -> Result<()> {
-    let conn = Connection::open("MatchResultsDB.db")?;
+    let conn = Connection::open("biopics.db")?;
     if query.trim().to_lowercase().starts_with("select") {
         let mut stmt = conn.prepare(query)?;
         let results = stmt.query_map(params![], |row| {
@@ -162,5 +172,6 @@ pub fn query(query: &str) -> Result<()> {
         conn.execute_batch(query)?;
     }
     log_query(query, LOG_FILE);
+    conn.close();
     Ok(())
 }
