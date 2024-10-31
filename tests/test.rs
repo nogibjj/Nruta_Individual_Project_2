@@ -2,8 +2,7 @@ use biopics_cli::{extract, query, transform_load};
 
 #[test]
 fn test_extract() {
-    let url =
-        "https://github.com/nruta-choudhari/Datasets/raw/refs/heads/main/biopics.csv";
+    let url = "https://github.com/nruta-choudhari/Datasets/raw/refs/heads/main/biopics.csv";
     let file_path = "data/biopics.csv";
     let directory = "data";
 
