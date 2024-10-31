@@ -1,6 +1,6 @@
 title,country,year_release,box_office,director,number_of_subjects,subject,type_of_subject,subject_race,subject_sex,lead_actor_actress
 I'm Not There.,US/Canada,2007,$4M,Todd Haynes,1,Bob Dylan,Musician,White,Male,-
-La Vie en Rose,Canada/UK,2007,$10.3M,Olivier Dahan,1,Ìädith Piaf.,Singer,White,Female,Marion Cotillard
+La Vie en Rose,Canada/UK,2007,$10.3M,Olivier Dahan,1,Edith Piaf.,Singer,White,Female,Marion Cotillard
 Music Within,US,2007,$153K,Steven Sawalich,1,Richard Pimentel,Activist,Multi racial,Male,Ron Livingston
 Persepolis,US,2007,$4.44M,"Vincent Paronnaud, Marjane Satrapi",1,Marjane 'Marji' Satrapi,Activist,Middle Eastern,Female,Chiara Mastroianni
 Talk to Me,US,2007,$4.47M,Kasi Lemmons,1,"Ralph ""Petey"" Greene",Activist,African American,Male,Don Cheadle
@@ -14,7 +14,7 @@ Cadillac Records,US,2008,$8.13M,Darnell Martin,3,Muddy Water,Musician,African Am
 Cadillac Records,US,2008,$8.13M,Darnell Martin,3,Leonard Chess,Musician,White,Male,Adrien Brody
 Che: Part One,US,2008,$1.73M,Steven Soderbergh,1,Che Guevara,Activist,Hispanic (Latin American),Male,Benicio Del Toro
 Hunger,UK,2008,$154K,Steve McQueen,1,Bobby Sands,Activist,White,Male,Michael Fassbender
-Little Ashes,UK,2008,$480K,Paul Morrison,1,Salvador DalÌ_,Artist,Multi racial,Male,Robert Pattinson
+Little Ashes,UK,2008,$480K,Paul Morrison,1,Salvador Dal,Artist,Multi racial,Male,Robert Pattinson
 Mesrine Part 1: Killer Instinct,Canada,2008,$552K,Jean-FranÌ¤ois Richet,1,Jacques Mesrine,Criminal,White,Male,Vincent Cassel
 Mesrine Part 2: Public Enemy #1,Canada,2008,$275K,Jean-FranÌ¤ois Richet,1,Jacques Mesrine,Criminal,White,Male,Vincent Cassel
 Milk,US,2008,$31.8M,Gus Van Sant,1,Harvey Milk,Activist,White,Male,Sean Penn
@@ -24,7 +24,6 @@ The Express,US,2008,$9.59M,Gary Fleder,1,Ernie Davis,Athlete,African American,Ma
 The Longshots,US,2008,$11.5M,Fred Durst,1,Jasmine Plummer,Athlete,African American,Female,Keke Palmer
 The Other Boleyn Girl,US/UK,2008,$26.8M,Justin Chadwick,2,Anne Boleyn,Historical,White,Female,Natalie Portman
 The Other Boleyn Girl,US/UK,2008,$26.8M,Justin Chadwick,2,Mary Boleyn,Historical,White,Female,Scarlett Johansson
-The Red Baron,UK,2008,$36.6K,Nikolai MÌÄå_llerschÌÄå¦n,1,Baron Manfred von Richthofen,Military,White,Male,Matthias SchweighÌ¦fer
 W.,US,2008,$25.5M,Oliver Stone,1,George W. Bush,World leader,White,Male,Josh Brolin
 Amelia,US/Canada,2009,$14.2M,Mira Nair,1,Amelia Earhart,Other,White,Female,Hilary Swank
 Bright Star,UK,2009,$4.44M,Jane Campion,2,John Keats,Author (poet),White,Male,Ben Whishaw
@@ -42,7 +41,6 @@ Fair Game,US,2010,$9.53M,Doug Liman,1,Valerie Plame,Government,White,Female,Naom
 Frankie & Alice,Canada,2010,$693K,Geoffrey Sax,1,Frankie Murdoch,Other,African American,Female,Halle Berry
 Howl,US,2010,$617K,"Rob Epstein, Jeffrey Friedman",1,Allen Ginsberg,Author,White,Male,James Franco
 The Fighter,US,2010,$93.6M,David O. Russell,1,Micky Ward,Athlete,White,Male,Mark Wahlberg
-The First Grader,US,2010,$331K,Justin Chadwick,1,Kimani Ng‰Ûªang‰Ûªa Maruge,Other,African,Male,Oliver Litondo
 The King's Speech,US/UK,2010,$139M,Tom Hooper,1,King George VI,Historical,White,Male,Colin Firth
 The Runaways,US,2010,$3.57M,Floria Sigismondi,2,Joan Jett,Musician,White,Female,Kristen Stewart
 The Whistleblower,US/Canada,2010,$1.12M,Larysa Kondracki,1,Kathryn Bolkovac,Other,White,Female,Rachel Weisz
@@ -72,7 +70,6 @@ Lovelace,US,2013,$355K,"Rob Epstein, Jeffrey Friedman",1,Linda Lovelace,Actress,
 Mandela: Long Walk to Freedom,UK,2013,$8.32M,Justin Chadwick,1,Nelson Mandela,World leader,African,Male,Idris Elba
 Philomena,US/UK,2013,$37.7M,Stephen Frears,1,Philomena Lee,Other,White,Female,Judi Dench
 Rush,US/UK,2013,$26.9M,Ron Howard,2,James Hunt,Athlete,White,Male,Chris Hemsworth
-Rush,US/UK,2013,$26.9M,Ron Howard,2,Niki Lauda,Athlete,White,Male,Daniel BrÌ_hl
 Saving Mr. Banks,US/UK,2013,$83.3M,John Lee Hancock,2,Walt Disney,Other,White,Male,Tom Hanks
 Saving Mr. Banks,US/UK,2013,$83.3M,John Lee Hancock,2,P.L. Travers,Author,White,Female,Emma Thompson
 The Fifth Estate,US,2013,$3.25M,Bill Condon,1,Julian Assange,Other,White,Male,Benedict Cumberbatch
@@ -92,7 +89,7 @@ Love & Mercy,US,2014,$9.26M,Bill Pohlad,1,Brian Wilson,Musician,White,Male,John 
 Low Down,US,2014,$44.5K,Jeff Preiss,1,Joe Albany,Musician,White,Male,John Hawkes
 Million Dollar Arm,US,2014,$36.4M,Craig Gillespie,1,J. B. Bernstein,Athlete,White,Male,Jon Hamm
 Mr. Turner,UK,2014,$3.96M,Mike Leigh,1,J.M.W. Turner,Artist,White,Male,Timothy Spall
-Rosewater,US,2014,$3.09M,Jon Stewart,1,Maziar Bahari,Media,Middle Eastern,Male,Gael GarcÌ_a Bernal
+Rosewater,US,2014,$3.09M,Jon Stewart,1,Maziar Bahari,Media,Middle Eastern,Male,Gael Garcia Bernal
 Selma,US/UK,2014,$52.1M,Ava DuVernay,1,"Martin Luther King, Jr",Activist,African American,Male,David Oyelowo
 Set Fire to the Stars,UK,2014,$3.27K,Andy Goddard,1,Dylan Thomas,Author (poet),White,Male,Celyn Jones
 Son of God,US,2014,$59.7M,Christopher Spencer,1,Jesus,Historical,Middle Eastern (White),Male,Diogo Morgado
