@@ -1,3 +1,6 @@
+// src/lib.rs
+
+use csv; // Ensure the csv crate is imported
 use reqwest::blocking::Client;
 use rusqlite::{params, Connection, Result};
 use std::error::Error;
