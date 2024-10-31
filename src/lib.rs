@@ -121,7 +121,6 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
             }
         }
     }
-    conn.close();
     Ok("biopics.db".to_string())
 }
 
@@ -172,6 +171,5 @@ pub fn query(query: &str) -> Result<()> {
         conn.execute_batch(query)?;
     }
     log_query(query, LOG_FILE);
-    conn.close();
     Ok(())
 }
