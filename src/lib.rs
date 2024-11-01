@@ -83,7 +83,7 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
 
     // Prepare the SQL statement for inserting records
     let mut stmt = conn.prepare(
-        "INSERT INTO Biopics (
+        "INSERT OR REPLACE INTO Biopics (
             title,
             country,
             year_release,
@@ -148,62 +148,56 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
     Ok("biopics.db".to_string())
 }
 
-pub fn query(query: &str) -> Result<()> {
+pub fn query(number_of_subjects: i32) -> Result<()> {
     let conn = Connection::open("biopics.db")?;
+    let query = "SELECT * FROM Biopics WHERE number_of_subjects = ?;"; // Keep the parameter placeholder
 
-    if query.trim().to_lowercase().starts_with("select") {
-        let mut stmt = conn.prepare(query)?;
-        let results = stmt.query_map(params![], |row| {
+    // Prepare the statement
+    let mut stmt = conn.prepare(query)?;
+
+    // Execute the query with the actual parameter
+    let results = stmt.query_map(params![number_of_subjects], |row| {
+        Ok((
+            row.get::<usize, String>(0)?,  // title
+            row.get::<usize, String>(1)?,  // country
+            row.get::<usize, i32>(2)?,     // year_release
+            row.get::<usize, String>(3)?,  // box_office
+            row.get::<usize, String>(4)?,  // director
+            row.get::<usize, i32>(5)?,     // number_of_subjects
+            row.get::<usize, String>(6)?,  // subject
+            row.get::<usize, String>(7)?,  // type_of_subject
+            row.get::<usize, String>(8)?,  // subject_race
+            row.get::<usize, String>(9)?,  // subject_sex
+            row.get::<usize, String>(10)?, // lead_actor_actress
+        ))
+    })?;
+
+    // Iterate through the results and print them
+    for result in results {
+        match result {
             Ok((
-                row.get::<usize, String>(0)?,  // title
-                row.get::<usize, String>(1)?,  // country
-                row.get::<usize, i32>(2)?,     // year_release
-                row.get::<usize, String>(3)?,  // box_office
-                row.get::<usize, String>(4)?,  // director
-                row.get::<usize, i32>(5)?,     // number_of_subjects
-                row.get::<usize, String>(6)?,  // subject
-                row.get::<usize, String>(7)?,  // type_of_subject
-                row.get::<usize, String>(8)?,  // subject_race
-                row.get::<usize, String>(9)?,  // subject_sex
-                row.get::<usize, String>(10)?, // lead_actor_actress
-            ))
-        })?;
-
-        for result in results {
-            match result {
-                Ok((
-                    title,
-                    country,
-                    year_release,
-                    box_office,
-                    director,
-                    number_of_subjects,
-                    subject,
-                    type_of_subject,
-                    subject_race,
-                    subject_sex,
-                    lead_actor_actress,
-                )) => {
-                    println!(
-                        "Result: title={}, country={}, year_release={}, box_office={}, director={}, number_of_subjects={}, subject={}, type_of_subject={}, subject_race={}, subject_sex={}, lead_actor_actress={}",
-                        title, country, year_release, box_office, director, number_of_subjects, subject, type_of_subject, subject_race, subject_sex, lead_actor_actress
-                    );
-                }
-                Err(e) => eprintln!("Error in row: {:?}", e),
+                title,
+                country,
+                year_release,
+                box_office,
+                director,
+                number_of_subjects,
+                subject,
+                type_of_subject,
+                subject_race,
+                subject_sex,
+                lead_actor_actress,
+            )) => {
+                println!(
+                    "Result: title={}, country={}, year_release={}, box_office={}, director={}, number_of_subjects={}, subject={}, type_of_subject={}, subject_race={}, subject_sex={}, lead_actor_actress={}",
+                    title, country, year_release, box_office, director, number_of_subjects, subject, type_of_subject, subject_race, subject_sex, lead_actor_actress
+                );
             }
-        }
-    } else {
-        // Log the query that is going to be executed
-        println!("Executing batch query: {}", query);
-
-        // Execute the batch query
-        if let Err(err) = conn.execute_batch(query) {
-            eprintln!("Error executing batch query: {:?}", err);
-            return Err(err);
+            Err(e) => eprintln!("Error in row: {:?}", e),
         }
     }
 
-    // Log the executed query
+    // Log the executed query (you can include the actual number_of_subjects if you want)
     log_query(query, LOG_FILE);
     Ok(())
 }

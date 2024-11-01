@@ -22,8 +22,8 @@ fn test_transform_load() {
 #[test]
 fn test_query() {
     // Execute a SELECT query
-    let select_query = "SELECT * FROM biopics WHERE year_release = 2009";
-    let result = query(select_query);
+    let _select_query = "SELECT * FROM biopics WHERE year_release = 2009";
+    let result = query(3);
 
     assert!(result.is_ok());
 }

@@ -21,8 +21,8 @@ fn main() {
     }
 
     // Step 3: Perform a sample query
-    let sample_query = "SELECT * FROM biopics"; // Example query, modify as needed
-    if let Err(e) = query(sample_query) {
+    let number_of_subjects = 4; // Change this value as needed
+    if let Err(e) = query(number_of_subjects) {
         eprintln!("Error executing query: {}", e);
     }
 }

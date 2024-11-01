@@ -1,3 +1,5 @@
+[![Rust CI/CD](https://github.com/nogibjj/Nruta_Individual_Project_2/actions/workflows/rust_cicd.yml/badge.svg)](https://github.com/nogibjj/Nruta_Individual_Project_2/actions/workflows/rust_cicd.yml)
+
 # IDS 706 Individual Project 2 - Rust CLI Binary with SQLite
 
 ### 🏗️ Requirements
@@ -69,7 +71,9 @@ The CRUD operations are as follows:
 The dataset being used here is `biopics.csv` provided by FiveThirtyEight.
 
 The outputs of these commands are provided in the screenshots below:
+![Extract](images/Extract.png)
 
+![Query](images/Query.png)
 
 ### 🤖 Usage of LLMS in the Coding Process
 As a beginner to Rust, I relied on LLMs to understand the code structure and to help me understand in how the syntax differs from Python. A few weeks earlier, I had completed a similar project in Python, which served as a foundational reference for my work in Rust. The LLMs played a crucial role in clarifying Rust’s syntax, providing code examples, and assisting me with debugging, which significantly accelerated my learning curve and enhanced my understanding of the language. This support allowed me to break down what initially seemed like an intimidating task into manageable chunks, helping me understand the process more effectively and enhancing my overall learning experience.
