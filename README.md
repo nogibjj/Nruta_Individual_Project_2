@@ -1,5 +1,4 @@
 [![Rust CI/CD](https://github.com/nogibjj/Nruta_Individual_Project_2/actions/workflows/rust_cicd.yml/badge.svg)](https://github.com/nogibjj/Nruta_Individual_Project_2/actions/workflows/rust_cicd.yml)
-
 # IDS 706 Individual Project 2 - Rust CLI Binary with SQLite
 
 ### 🏗️ Requirements
