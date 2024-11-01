@@ -78,4 +78,4 @@ The outputs of these commands are provided in the screenshots below:
 As a beginner to Rust, I relied on LLMs to understand the code structure and to help me understand in how the syntax differs from Python. A few weeks earlier, I had completed a similar project in Python, which served as a foundational reference for my work in Rust. The LLMs played a crucial role in clarifying Rust’s syntax, providing code examples, and assisting me with debugging, which significantly accelerated my learning curve and enhanced my understanding of the language. This support allowed me to break down what initially seemed like an intimidating task into manageable chunks, helping me understand the process more effectively and enhancing my overall learning experience.
 
 ### 🎥 Demo Video
-Please click here where I walk through the project.
+Please click [here](https://youtu.be/piLs553IF9A) where I walk through the project.
