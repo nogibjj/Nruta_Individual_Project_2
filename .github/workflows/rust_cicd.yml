@@ -22,20 +22,29 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Install dependencies
-        run: cargo build --release  # Installs all dependencies and builds in release mode
+      - name: Install Rust dependencies
+        run: make install
 
       - name: Lint Rust code
-        run: cargo clippy -- -D warnings  # Lints and treats warnings as errors
+        run: make lint
 
       - name: Format Rust code
-        run: cargo fmt -- --check  # Ensures code formatting follows the style guide
+        run: make format
 
       - name: Build Rust project
-        run: cargo build --release  # Builds the project in release mode
+        run: make build
 
       - name: Run Rust tests
-        run: cargo test  # Runs unit and integration tests
+        run: make test
 
-      - name: Run Rust application (optional, for CLI)
-        run: cargo run --release
+      - name: Build optimized Rust binary
+        run: cargo build --release
+
+      - name: Upload optimized Rust binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-binary
+          path: target/release/biopics_cli
+
+      - name: Run Rust application
+        run: make run
