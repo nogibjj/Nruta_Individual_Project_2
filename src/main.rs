@@ -1,10 +1,10 @@
 // main.rs file to execute Rust code
 
-use biopics_cli::{extract, query, transform_load}; 
+use biopics_cli::{extract, query, transform_load};
 
 fn main() {
     // Initialize file paths and database names
-    let url = "https://github.com/nruta-choudhari/Datasets/raw/refs/heads/main/biopics.csv"; 
+    let url = "https://github.com/nruta-choudhari/Datasets/raw/refs/heads/main/biopics.csv";
     let file_path = "data/biopics.csv";
     let _db_name = "biopics.db";
 
@@ -23,7 +23,7 @@ fn main() {
     }
 
     // Step 3: Perform a sample query
-    let number_of_subjects = 4; 
+    let number_of_subjects = 4;
     if let Err(e) = query(number_of_subjects) {
         eprintln!("Error executing query: {}", e);
     }
