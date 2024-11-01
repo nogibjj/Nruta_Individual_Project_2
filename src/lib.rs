@@ -44,31 +44,35 @@ pub fn extract(url: &str, file_path: &str, directory: &str) {
 }
 
 pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
+    // Check if the dataset file exists
     if fs::metadata(dataset).is_err() {
         eprintln!("Error: Dataset file does not exist: {}", dataset);
         return Err(rusqlite::Error::QueryReturnedNoRows);
     }
 
+    // Open the SQLite connection
     let conn = Connection::open("biopics.db")?;
 
+    // Create the Biopics table if it doesn't exist
     conn.execute(
-       "CREATE TABLE IF NOT EXISTS Biopics (
-        title TEXT,
-        country TEXT,
-        year_release INTEGER,
-        box_office TEXT,
-        director TEXT,
-        number_of_subjects INTEGER,
-        subject TEXT,
-        type_of_subject TEXT,
-        subject_race TEXT,
-        subject_sex TEXT,
-        lead_actor_actress TEXT,
-        UNIQUE(title, country, year_release, box_office, director, number_of_subjects, subject, type_of_subject, subject_race, subject_sex, lead_actor_actress)
+        "CREATE TABLE IF NOT EXISTS Biopics (
+            title TEXT,
+            country TEXT,
+            year_release INTEGER,
+            box_office TEXT,
+            director TEXT,
+            number_of_subjects INTEGER,
+            subject TEXT,
+            type_of_subject TEXT,
+            subject_race TEXT,
+            subject_sex TEXT,
+            lead_actor_actress TEXT,
+            UNIQUE(title, country, year_release, box_office, director, number_of_subjects, subject, type_of_subject, subject_race, subject_sex, lead_actor_actress)
         )",
         [],
-        )?;
+    )?;
 
+    // Create a CSV reader for the dataset
     let mut rdr = csv::ReaderBuilder::new()
         .has_headers(true)
         .from_path(dataset)
@@ -77,6 +81,7 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
             rusqlite::Error::QueryReturnedNoRows
         })?;
 
+    // Prepare the SQL statement for inserting records
     let mut stmt = conn.prepare(
         "INSERT INTO Biopics (
             title,
@@ -93,17 +98,21 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     )?;
 
+    // Iterate through CSV records
     for result in rdr.records() {
         match result {
             Ok(record) => {
+                // Check for the expected number of fields
                 if record.len() < 11 {
                     eprintln!(
                         "Warning: Record has fewer than expected fields: {:?}",
                         record
                     );
-                    continue;
+                    continue; // Skip to the next record
                 }
-                stmt.execute([
+
+                // Execute the insert statement
+                if let Err(err) = stmt.execute([
                     &record[0],
                     &record[1],
                     &record[2],
@@ -115,7 +124,21 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
                     &record[8],
                     &record[9],
                     &record[10],
-                ])?;
+                ]) {
+                    // Check for ConstraintViolation error
+                    if let rusqlite::Error::SqliteFailure(ref sqlite_err, _) = err {
+                        if sqlite_err.code == rusqlite::ErrorCode::ConstraintViolation {
+                            // Skip the duplicate record
+                            eprintln!("Duplicate record skipped: {:?}", record);
+                        } else {
+                            // Return other types of errors
+                            return Err(err);
+                        }
+                    } else {
+                        // Return any non-SQLiteFailure errors
+                        return Err(err);
+                    }
+                }
             }
             Err(err) => {
                 eprintln!("Error reading CSV record: {:?}", err);
@@ -127,6 +150,7 @@ pub fn transform_load(dataset: &str) -> Result<String, rusqlite::Error> {
 
 pub fn query(query: &str) -> Result<()> {
     let conn = Connection::open("biopics.db")?;
+
     if query.trim().to_lowercase().starts_with("select") {
         let mut stmt = conn.prepare(query)?;
         let results = stmt.query_map(params![], |row| {
@@ -169,8 +193,17 @@ pub fn query(query: &str) -> Result<()> {
             }
         }
     } else {
-        conn.execute_batch(query)?;
+        // Log the query that is going to be executed
+        println!("Executing batch query: {}", query);
+
+        // Execute the batch query
+        if let Err(err) = conn.execute_batch(query) {
+            eprintln!("Error executing batch query: {:?}", err);
+            return Err(err);
+        }
     }
+
+    // Log the executed query
     log_query(query, LOG_FILE);
     Ok(())
 }
